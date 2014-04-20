@@ -357,7 +357,8 @@ define( function (require) {
                 this.weightVelocity = this.model.get("weightPlan.weightVelocity");
             }
 
-            if (!this.startDate || !this.goalDate || !this.startWeight || !this.goalWeight || !this.weightVelocity || !this.ui.graph.length) {
+            //if (!this.startDate || !this.goalDate || !this.startWeight || !this.goalWeight || !this.weightVelocity || !this.ui.graph.length) {
+            if (!this.model.get("weightPlan") || this.model.get("weightPlan").isNew()) {
                 this.ui.header.addClass("locked");
                 this.ui.yourProgress.removeClass("open");
                 return;
