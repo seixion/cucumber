@@ -39,9 +39,16 @@ a {
 }
 
 .rotate {
-  // TODO all the other prefixes
+  -moz-transform: rotate(-90deg);
+  -moz-transform-origin: 0 0;
   -webkit-transform: rotate(-90deg);
   -webkit-transform-origin: 0 0;
+  -o-transform: rotate(-90deg);
+  -o-transform-origin: 0 0;
+  -ms-transform: rotate(-90deg);
+  -ms-transform-origin: 0 0;
+  transform: rotate(-90deg);
+  transform-origin: 0 0;
 }
 
 .app-wrapper {
@@ -578,6 +585,8 @@ $loginFontSize: 18px;
         margin-left: -1px;
         margin-top: -1px;
         -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
       }
 
     }

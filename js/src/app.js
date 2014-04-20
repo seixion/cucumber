@@ -17,8 +17,6 @@ define( function (require) {
 
         app.on("initialize:after", function () {
             Backbone.history.start();
-            // TODO need some serverside to support this
-            //Backbone.history.start({pushState: true, root: "/cucumber/"});
 
         });
 

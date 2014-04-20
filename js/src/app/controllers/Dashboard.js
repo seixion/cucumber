@@ -18,14 +18,14 @@ define( function (require) {
     return Marionette.Controller.extend({
 
         initialize: function (options) {
+
             self = this;
-            this.listenTo(app.vent, "addUserWeight", this.addUserWeight);
+
         },
 
         buildModels: function () {
 
             this.userModel = new UserModel();
-
             this.facebookUserModel = new FacebookUserModel();
             this.facebookUserModel.fetch();
 
@@ -51,24 +51,26 @@ define( function (require) {
 
             this.buildModels();
 
-            // FIXME this path is just for dev
-            if (overrideExternalId) {
+            // // FIXME this path is just for dev
+            // if (overrideExternalId) {
 
-                app.layout.main.show(new DashboardLayout({
-                    model: this.userModel,
-                    facebookUserModel: this.facebookUserModel
-                }));
+            //     app.layout.main.show(new DashboardLayout({
+            //         model: this.userModel,
+            //         facebookUserModel: this.facebookUserModel
+            //     }));
 
-                this.doLogin(overrideExternalId);
+            //     this.doLogin(overrideExternalId);
 
-                app.layout.footer.show(new FooterView());
+            //     app.layout.footer.show(new FooterView());
 
-                return;
+            //     return;
 
-            }
+            // }
 
             this.listenTo(this.facebookUserModel, "change", _.bind(function () {
                 
+                // FIXME firefox never gets this change event
+
                 if (this.facebookUserModel.get("id")) {
 
                     app.layout.main.show(new DashboardLayout({
