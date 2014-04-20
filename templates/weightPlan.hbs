@@ -1,0 +1,83 @@
+
+<div id="confirm-reset-modal" class="dialog" title="Reset your Weight plan?">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        Your Weight plan will be completely reset. Are you sure?
+    </p>
+</div>
+
+<div class="weight-plan-header open create">
+    <h3>
+        <a href="#" class="toggleEditWeightPlan edit">Edit your weight plan</a>
+        <a href="#" class="toggleEditWeightPlan create">Create your weight plan</a>
+    </h3>
+    <span class="border-label rotate">Your weight plan</span>
+</div>
+
+<div class="weight-plan open">
+
+    <div class="weight-plan-inner">
+
+        <div class="plan-input">
+            <label>Start weight</label>  
+            <input type="number" min=0 id="startWeightSt" value="{{startWeightSt}}"><span>st</span>
+            <select id="startWeightStRm">
+                {{#each startWeightStRmValues}}
+                    {{#if selected}}
+                        <option selected>{{value}}</option>
+                    {{else}}
+                        <option>{{value}}</option>
+                    {{/if}}
+                {{/each}}
+            </select>
+            <select id="startWeightDec">
+                {{#each startWeightFractionValues}}
+                    {{#if selected}}
+                        <option value="{{real}}" selected>{{value}}</option>
+                    {{else}}
+                        <option value="{{real}}">{{value}}</option>
+                    {{/if}}
+                {{/each}}
+            </select>   
+            <span>lbs</span>
+        </div>
+
+        <div class="plan-input">
+            <label>Goal weight</label>
+            <input type="number" min=0 id="endWeightSt" value="{{endWeightSt}}"><span>st</span>
+            <select id="endWeightStRm">
+                {{#each endWeightStRmValues}}
+                    {{#if selected}}
+                        <option selected>{{value}}</option>
+                    {{else}}
+                        <option>{{value}}</option>
+                    {{/if}}
+                {{/each}}
+            </select>
+            <span>lbs</span>
+        </div>
+
+        <div class="plan-input">
+            <label>Weight/week goal</label>
+            <select id="weightVelocity">
+                {{#each velocityValues}}
+                    {{#if selected}}
+                        <option selected>{{value}}</option>
+                    {{else}}
+                        <option>{{value}}</option>
+                    {{/if}}
+                {{/each}}
+            </select>
+        </div>
+
+        <button class="update-plan">preview</button>
+        <button class="save-plan">save weight plan</button>
+        <button class="button danger-button reset">reset weight plan</button>
+
+        <div class="plan-date-controls">
+            <div id="planDateRange"></div>
+        </div>
+
+    </div>
+
+</div>

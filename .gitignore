@@ -1,0 +1,8 @@
+.DS_Store
+/.settings
+/.buildpath
+/.project
+bin/
+node_modules/
+.sass-cache/
+style.css

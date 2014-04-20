@@ -1,0 +1,37 @@
+
+<div class="weight-plan-header weigh-in-header">
+    <h3>
+        <a href="#" class="toggleWeighIn">Weigh in today</a>
+    </h3>
+</div>
+
+<div class="weigh-in">
+
+    <div class="weigh-in-inner">
+        <div class="plan-input">
+            <label>Your weight today</label>  
+            <input type="number" min=0 id="weighInSt" value="{{weighInSt}}"><span>st</span>
+            <select id="weighInStRm">
+                {{#each weighInStRmValues}}
+                    {{#if selected}}
+                        <option selected>{{value}}</option>
+                    {{else}}
+                        <option>{{value}}</option>
+                    {{/if}}
+                {{/each}}
+            </select>
+            <select id="weighInDec">
+                {{#each weighInFractionValues}}
+                    {{#if selected}}
+                        <option value="{{real}}" selected>{{value}}</option>
+                    {{else}}
+                        <option value="{{real}}">{{value}}</option>
+                    {{/if}}
+                {{/each}}
+            </select>   
+            <span>lbs</span>
+        </div>
+        <button>Update</button>
+    </div>
+
+</div>
