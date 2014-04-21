@@ -69,7 +69,7 @@ define( function (require) {
 
             this.listenTo(this.facebookUserModel, "change", _.bind(function () {
                 
-                // FIXME firefox never gets this change event
+                // FIXME firefox never gets this change event if the user is not logged in
 
                 if (this.facebookUserModel.get("id")) {
 
