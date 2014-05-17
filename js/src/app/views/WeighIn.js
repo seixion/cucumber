@@ -41,7 +41,12 @@ define( function (require) {
 
         modelEvents: {
             "change": function () {
-                this.checkCanWeighIn();
+                if (this.canWeighIn()) {
+                    this.ui.header.removeClass("locked");
+                } else {
+                    this.ui.header.addClass("locked");
+                    this.ui.weighIn.removeClass("open");
+                }
             }
         },
 
@@ -60,27 +65,28 @@ define( function (require) {
             this.ui.weighIn.removeClass("open");
         },
 
-        checkCanWeighIn: function () {
+        // FIXME is this working properly?
+        // could I refactor with some underscore chaining and make it simpler?
+        canWeighIn: function () {
             // check weights to see if we have one for today
+            var check = true;
             var today = moment.utc([moment().year(), moment().month(), moment().date()]);
             _.each(this.model.get("weightPlan.weights"), _.bind(function (weight) {
                 if (weight.date.diff(today, "days") === 0) {
-                    this.ui.weighIn.removeClass("open");
-                    this.ui.header.addClass("locked");
+                    check = false;
                     return false; // break
                 }
             }, this));
+            return check;
         },
 
         onDomRefresh: function () {
             this.$("button").button();
 
-            if (!this.startDate || !this.endDate || !this.startWeight || !this.endWeight) {
+            if (!this.startDate || !this.endDate || !this.startWeight || !this.endWeight || !this.canWeighIn()) {
                 this.ui.header.addClass("locked");
                 this.ui.weighIn.removeClass("open");
             }
-
-            this.checkCanWeighIn();
         },
 
         serializeData: function () {

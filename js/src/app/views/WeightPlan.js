@@ -5,7 +5,7 @@ define( function (require) {
 
     var $               = require("jquery");
     var app             = require("app");
-    var marionette      = require("backbone.marionette");
+    var Marionette      = require("backbone.marionette");
     var weightPlanT     = require("hbars!templates/weightPlan");
     var moment          = require("moment");
     var weightUnitUtils = require("lib/weightUnitUtils");

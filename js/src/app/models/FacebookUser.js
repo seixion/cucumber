@@ -11,9 +11,6 @@ define( function (require) {
 
     return Backbone.Model.extend({
 
-        defaults: {
-        },
-
         appId: "593672820710704",
 
         initialize: function () {
@@ -32,22 +29,11 @@ define( function (require) {
                     });
 
                     facebook.Event.subscribe("auth.authResponseChange", _.bind(function (response) {
-
-                        if (response.status === "connected") {
-                            facebook.api("/me", _.bind(function (response) {
-                                response.status = "connected";
-                                this.set(this.parse(response));
-                                this.trigger("sync");
-                            }, this));
-                        }
-
-                        else {
-                            this.set(this.parse(response));
-                            this.trigger("sync");
-                        }
-
+                        this.onAuthResponseChange(facebook, response).then(_.bind(function (response) {
+                            this.set(this.parse(response)); 
+                        }, this));
                     }, this));
-
+                    
                     this.FB.resolve(facebook);
 
                 }, this));
@@ -57,16 +43,42 @@ define( function (require) {
 
         },
 
+        onAuthResponseChange: function (facebook, response) {
+
+            var deferred = $.Deferred();
+
+            if (response.status === "connected") {
+                facebook.api("/me", _.bind(function (response) {
+                    response.status = "connected";
+                    deferred.resolve(response);
+                }, this));
+            }
+
+            else {
+                deferred.resolve();
+            }
+
+            return deferred.promise();
+
+        },
+
         parse: function (response) {
             
-            if (response.status === "connected") {
+            if (response && response.status === "connected") {
                 return {
                     name: response.name,
                     id: parseInt(response.id, 10)
                 }
             } else {
                 // returnig blank object isn't enough to clear model
-                this.clear().set(this.defaults);
+                this.clear();
+                if (this.isNew()){
+                    // forces a change:
+                    // neeed when an initial fetch arrives here, listeners can interpet a change with empty id
+                    // as a prompt to show the login page, without this no change happens, defaults is replaced with defaults
+                    // and listens don't have a good way of knowing the status request came back 
+                    this.set("resetDefaults", Date.now());
+                }
                 return {};
             }
 
@@ -74,30 +86,20 @@ define( function (require) {
 
         sync: function (method, model, options) {
 
-            var syncDeferred = $.Deferred();
+            var deferred = $.Deferred();
 
             switch (method) {
 
                 case "read":
 
-                    this.FB.done(function (facebook) {
-                        facebook.getLoginStatus( function (response) {
-
-                            if (response.status === "connected") {
-                                facebook.api("/me", function (response) {
-                                    response.status = "connected";
-                                    options.success(response);
-                                    syncDeferred.resolve();
-                                });
-                            }
-
-                            else {
+                    this.FB.done(_.bind(function (facebook) {
+                        facebook.getLoginStatus(_.bind(function (response) {
+                            this.onAuthResponseChange(facebook, response).then(function (response) {
                                 options.success(response);
-                                syncDeferred.resolve();
-                            }
-
-                        });
-                    });
+                                deferred.resolve();
+                            });
+                        }, this));
+                    }, this));
 
                     break;
 
@@ -112,7 +114,7 @@ define( function (require) {
 
             }
 
-            return syncDeferred.promise();
+            return deferred.promise();
 
         },
 

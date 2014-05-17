@@ -17,6 +17,7 @@ class UserWeight extends REST_Controller {
 
         $this->user_model->addWeight($userId, $date, $weight);
 
+        header("HTTP/1.1 204");
         $this->response(204);
 
     }

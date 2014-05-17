@@ -1,7 +1,7 @@
 
 var require;
 (function (){
-    var debug = true;
+    var debug = false;
     // DEVLOPMENT
     if (debug) {
         require = {

@@ -4,9 +4,6 @@
     http://requirejs.org/docs/api.html
    =================================================================== */
 
-// FIXME work out how to use conflict on underscore, backbone and marionette
-// and moment
-
 requirejs.config({
 
     paths: {
@@ -18,6 +15,8 @@ requirejs.config({
         "backbone": "vendor/backbone",
         "backbone.marionette": "vendor/backbone.marionette",
         "backbone.associations": "vendor/backbone-associations",
+        "backbone.babysitter":"vendor/backbone.babysitter",
+        "backbone.wreqr":"vendor/backbone.wreqr",
         "Handlebars": "vendor/handlebars/handlebars-v1.3.0",
         "hbars": "vendor/hbars",
         "jqueryUI": "vendor/jquery-ui-1.10.4.custom",
@@ -33,20 +32,9 @@ requirejs.config({
             deps: ["jquery"],
             exports: "jQuery.fn.imagesLoaded"
         },
-        "underscore": {
-            exports: "_"
-        },
-        "backbone": {
-            deps: ["jquery", "underscore"],
-            exports: "Backbone"
-        },
-        "backbone.marionette": {
-            deps:["backbone"],
-            exports: "Backbone.Marionette"
-        },
         "backbone.associations": {
-            deps: ["backbone"],
-            exports: "Backbone.Associations"
+            exports: "Backbone.Associations",
+            deps: ["backbone"]
         },
         "Handlebars": {
             exports: "Handlebars"
@@ -75,10 +63,8 @@ requirejs.config({
 
 define([
         "jquery",
-        "Main"
-        ], function($, Main) {
-
+        "main"
+        ], function($, main) {
     $.noConflict(false);
-    new Main();
 });
 

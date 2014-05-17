@@ -9,7 +9,7 @@ define( function (require) {
     var AppRouter               = require("app/routers/App");
     var AppLayout               = require("app/views/layouts/App");
 
-    function Main () {
+    (function () {
 
         // setup controllers:
         var dashboardController = new DashboardController();
@@ -25,8 +25,7 @@ define( function (require) {
 
         app.start();
 
-    }
 
-    return Main;
+    }());
 
 });

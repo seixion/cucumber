@@ -25,13 +25,6 @@ define( function (require) {
             weightPlanContainer: ".js-region-weight-plan-container"
         },
 
-        modelEvents: {
-            // FIXME this is bad, is causes all the views to be re-created... why did I need it again?
-            sync: function () {
-
-            }
-        },
-
         viewImpls: {
             logoutContainer: {
                 view: LogoutBox,

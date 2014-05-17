@@ -26,9 +26,10 @@ class User extends REST_Controller {
         } else {
             $user = $this->user_model->getByExternalId($externalId);
         }
-
+ 
         if (empty($user)) {
-            $this->response($response);
+            header("HTTP/1.1 200");
+            $this->response($response, 200);
             return;
         }
 
@@ -57,7 +58,8 @@ class User extends REST_Controller {
             $response->weightPlan->weights = $user->weightPlan->weights;
         }
 
-        $this->response($response);
+        header("HTTP/1.1 200");
+        $this->response($response, 200);
 
     }
 
@@ -73,7 +75,8 @@ class User extends REST_Controller {
         $response->id = $userId;
         $response->externalId = $externalId;
 
-        $this->response($response);
+        header("HTTP/1.1 200");
+        $this->response($response, 200);
 
     }
 

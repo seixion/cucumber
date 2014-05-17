@@ -28,6 +28,7 @@ class WeightPlan extends REST_Controller {
         $weightPlanId = $this->weight_plan_model->create($weightPlan);
         $this->user_model->setWeightPlan($userId, $weightPlanId);
 
+        header("HTTP/1.1 204");
         $this->response(204);
 
     }
@@ -51,6 +52,7 @@ class WeightPlan extends REST_Controller {
 
         $this->weight_plan_model->update($weightPlan);
 
+        header("HTTP/1.1 204");
         $this->response(204);
 
     }
@@ -64,6 +66,8 @@ class WeightPlan extends REST_Controller {
         $user = $this->user_model->getByWeightPlanId($id);
         $this->weight_plan_model->delete($id);
         $this->user_model->setWeightPlan($user->id, null);
+
+        header("HTTP/1.1 204");
         $this->response(204);
 
     }
